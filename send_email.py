@@ -40,7 +40,6 @@ def get_files(select_file = 'all'):
 	return files
 
 def send_mail_via_com(text, subject, recipient, select_file = 'all'):
-	
 	o = win32com.client.Dispatch("Outlook.Application")
 
 	Msg = o.CreateItem(0)

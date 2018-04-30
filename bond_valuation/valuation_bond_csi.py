@@ -1,14 +1,7 @@
 import pandas as pd
-import psycopg2 as sql
-from sqlalchemy import create_engine
 import datetime as dt
-import requests, zipfile, io
 from operator import *
 import traceback
-
-engine_str = 'postgresql://postgres:sunweiyao366@localhost:5432/quant'
-sql_conn_str = 'dbname = quant user=postgres password=sunweiyao366 host=localhost port=5432'
-engine = create_engine(engine_str)
 
 current_date = dt.datetime.now().strftime('%Y%m%d')
 time_stp = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')

@@ -25,7 +25,6 @@ class Proxy_Setting():
 		INTERNET_SETTINGS = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
 		r'Software\Microsoft\Windows\CurrentVersion\Internet Settings',
 		0, winreg.KEY_ALL_ACCESS)
-		# _, reg_type = winreg.QueryValueEx(INTERNET_SETTINGS, 'ProxyEnable')
 		winreg.SetValueEx(INTERNET_SETTINGS, 'ProxyEnable', 0, 4, 0)
 
 	def start_proxy(self):
