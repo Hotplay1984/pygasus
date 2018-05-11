@@ -71,6 +71,7 @@ def get_bond_cfets(datadate=date):
 	df['datadate'] = [dt.datetime.now().strftime('%Y%m%d') for x in range(len(df))]
 	return df
 
+
 def get_bond_index_csi(bng_date=date, end_date=date):
     url_0 = "http://www.csindex.com.cn/zh-CN/bond-valuation/stock-market-index?date1=@@bng_date&date2=@@end_date"
     bng_date = dt.datetime.strptime(str(bng_date), '%Y%m%d').strftime('%Y-%m-%d')
@@ -78,3 +79,4 @@ def get_bond_index_csi(bng_date=date, end_date=date):
     url = url_0.replace('@@bng_date', bng_date)
     url = url.replace('@@end_date', end_date)
     return pd.read_excel(url)
+

@@ -1,4 +1,4 @@
 from settings import operator
-from spiders import bond_csi
+from spiders import bond_curve
 
-print(bond_csi.get_bond_csi())
+
