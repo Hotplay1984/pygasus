@@ -1,4 +1,6 @@
 from settings import operator
-from spiders import bond_curve
+from spiders import mm
+
+print(mm.get_shibor())
 
 
