@@ -91,3 +91,16 @@ def get_bond_trade():
 	for row in res:
 		values.append([row[label] for label in labels])
 	return pd.DataFrame(values, columns = labels)
+
+
+def get_bond_info(bond_code):
+	url_defined_code = 'http://www.chinamoney.com.cn/ags/ms/cm-u-bond-md/BondMarketInfoList2?bondCode=@@bondCode'
+	url = 'http://www.chinamoney.com.cn/ags/ms/cm-u-bond-md/BondDetailInfo?bondDefinedCode=@@defined_code'
+	url_defined_code = url_defined_code.replace('@@bondCode', str(bond_code))
+	res = json.loads(get_res(url_defined_code))
+	for response in res['data']['resultList']:
+		if str(bond_code) == response['bondCode']:
+			defined_code = response['bondDefinedCode']
+	url = url.replace('@@defined_code', str(defined_code))
+	res = json.loads(get_res(url))
+	return res['data']
