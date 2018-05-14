@@ -4,6 +4,7 @@ parent_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)
 sys.path.append(parent_path)
 
 import pandas as pd
+from bs4 import BeautifulSoup
 import datetime as dt
 from pandas.tseries.offsets import Day
 import zipfile, io
@@ -80,7 +81,7 @@ def get_csi_curve(curve_id='all', bng_date=date, end_date=date):
 def get_cfets_curve_codes():
 	print('downloading curve codes...')
 	url_curve_code = 'http://www.chinamoney.com.cn/fe-c/closedYieldCurveHistoryQueryAction.do?'
-	res = get_res(url_curve_code)
+	res = op.get_res(url_curve_code)
 	bs = BeautifulSoup(res, 'lxml')
 	curve_code_dict = {}
 	for val_html in bs.find('select', {'name':'bondTypeTemp'}).findAll('option'):
@@ -90,7 +91,7 @@ def get_cfets_curve_codes():
 
 
 def get_cfets_bond_curve_single(url, curve_code):
-	bs = BeautifulSoup(get_res(url), 'lxml')
+	bs = BeautifulSoup(op.get_res(url), 'lxml')
 	trs = bs.find('table', {'class':'rmb-cnt'}).findAll('tr')[3:]
 	columns = ['curve_date', 'time_bucket', 'ytm', 'spot', 'forward']
 	value_lists = [[] for x in range(len(trs))]

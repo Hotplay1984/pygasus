@@ -9,6 +9,7 @@ from pandas.tseries.offsets import Day
 import zipfile, io
 import traceback
 from settings import operator
+from bs4 import BeautifulSoup
 
 op = operator.Operator()
 data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
@@ -50,7 +51,7 @@ def get_bond_cfets(datadate=date):
 		url = url_0.replace('@@showDate', showDate)
 		url = url.replace('@@bond_type', bond_type)
 		print(bond_type)
-		res = get_res(url)
+		res = op.get_res(url)
 		bs = BeautifulSoup(res, 'lxml')
 
 		tds = bs.findAll('tr')[0].findAll('tr')[1:]
@@ -86,7 +87,7 @@ def get_bond_trade():
 	url = 'http://www.chinamoney.com.cn/ags/ms/cm-u-md-bond/CbtPri?lang=cn&flag=1&bondName='
 	labels = ['abdAssetEncdShrtDesc', 'bondcode','bpNum', 'dmiLatestContraRate', 
 			  'dmiWghtdContraRate', 'dmiTtlTradedAmnt', 'showDate']
-	res = json.loads(get_res(url))['records']
+	res = json.loads(op.get_res(url))['records']
 	values = []
 	for row in res:
 		values.append([row[label] for label in labels])
@@ -97,10 +98,10 @@ def get_bond_info(bond_code):
 	url_defined_code = 'http://www.chinamoney.com.cn/ags/ms/cm-u-bond-md/BondMarketInfoList2?bondCode=@@bondCode'
 	url = 'http://www.chinamoney.com.cn/ags/ms/cm-u-bond-md/BondDetailInfo?bondDefinedCode=@@defined_code'
 	url_defined_code = url_defined_code.replace('@@bondCode', str(bond_code))
-	res = json.loads(get_res(url_defined_code))
+	res = json.loads(op.get_res(url_defined_code))
 	for response in res['data']['resultList']:
 		if str(bond_code) == response['bondCode']:
 			defined_code = response['bondDefinedCode']
 	url = url.replace('@@defined_code', str(defined_code))
-	res = json.loads(get_res(url))
+	res = json.loads(op.get_res(url))
 	return res['data']
