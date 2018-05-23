@@ -18,7 +18,6 @@ class Operator(object):
 		self.sql_setting = get_sql_setting()
 
 	def get_res(self, url, proxy=False, stream=True, text=True, params=None):
-		try_counter = 0
 		res_text = None
 		if res_text is None:
 			with requests.Session() as session:
